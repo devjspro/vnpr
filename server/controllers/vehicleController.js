@@ -10,10 +10,15 @@ export const processImage = async (req, res) => {
     formData.append("file", req.file.buffer, req.file.originalname);
 
     const response = await axios.post(
-      `${process.env.BACKEND_URL}/recognize`,
-      formData,
-      { headers: formData.getHeaders() }
-    );
+  `${process.env.BACKEND_URL}/recognize`,
+  formData,
+  {
+    headers: {
+      ...formData.getHeaders(),
+    },
+    maxBodyLength: Infinity,
+  }
+);
 
     const plate = response.data.plate_number;
 
