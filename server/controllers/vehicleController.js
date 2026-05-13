@@ -1,6 +1,8 @@
 import axios from "axios";
 import Vehicle from "../models/VehicleLog.js";
 import FormData from "form-data";
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const processImage = async (req, res) => {
   try {
@@ -8,7 +10,7 @@ export const processImage = async (req, res) => {
     formData.append("file", req.file.buffer, req.file.originalname);
 
     const response = await axios.post(
-      "http://localhost:8000/recognize",
+      `${process.env.BACKEND_URL}/recognize`,
       formData,
       { headers: formData.getHeaders() }
     );
